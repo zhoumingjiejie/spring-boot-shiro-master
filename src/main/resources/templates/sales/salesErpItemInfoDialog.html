@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layouts/list" lang="">
+<head>
+    <link rel="stylesheet" href="../assets/layui/css/layui.css"
+          th:href="@{/assets/layui/css/layui.css}"/>
+    <link rel="stylesheet" href="../assets/layui/css/global.css"
+          th:href="@{/assets/layui/css/global.css}"/>
+    <link rel="stylesheet" href="../assets/wln/css/wln.css"
+          th:href="@{/assets/wln/css/wln.css}"/>
+    <script type="text/javascript" src="../../assets/plugins/jquery.js" th:src="@{/assets/plugins/jquery.js}"></script>
+    <script type="text/javascript" src="../../assets/layui/layui.js" th:src="@{/assets/layui/layui.js}"></script>
+    <script type="text/javascript" src="../../assets/plugins/easyui/jquery.easyui.min.js"
+            th:src="@{/assets/plugins/easyui/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" src="../../assets/wln/serializeObject.js"
+            th:src="@{/assets/wln/serializeObject.js}"></script>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form id="ff" method="post">
+
+    <div class="box-center">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>线上信息</legend>
+        </fieldset>
+
+        <div class="box-center-line">
+            <div class="box-center-left">
+                <div>
+                    <label>线上编码:
+                        <input class="easyui-validatebox" type="text" name="oln_item_id"/>
+                    </label>
+                </div>
+                <div>
+                    <label>线上规格:
+                        <input class="easyui-validatebox" type="text" name="oln_sku_id"/>
+                    </label>
+                </div>
+                <div>
+                    <label>线上标题:
+                        <input class="easyui-validatebox" type="text" name="oln_item_name"/>
+                    </label>
+                </div>
+            </div>
+            <div class="box-center-right">
+                <a style="float: right" href="javascript:" class="file">线上图片
+                    <input type="file" name="online_image_file" id="input_online_image"/>
+                </a>
+                <img id="online_image" onclick="dimgloadwin('online_image')"
+                     style="display:block;margin:0 auto;float: left"
+                     onmouseover="window.parent.bigImg(this)"
+                     onmouseout="window.parent.closeImgWin()"
+                     src="" height="50" width="50" alt=""/>
+            </div>
+        </div>
+
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>万里牛ERP信息</legend>
+        </fieldset>
+        <div class="box-center-line">
+            <div class="box-center-left">
+                <div>
+                    <label>万里牛规格编码:
+                        <input class="easyui-validatebox" type="text" name="item_name"/>
+                    </label>
+                </div>
+                <div>
+                    <label>万里牛规格名称:
+                        <input class="easyui-validatebox" type="text" name="demo"/>
+                    </label>
+                </div>
+            </div>
+            <div class="box-center-right">
+                <a style="float: right" href="javascript:" class="file">万里牛图片
+                    <input type="file" name="wln_image_file" id="input_wln_image"/>
+                </a>
+                <img id="wln_image" onclick="dimgloadwin('wln_image')"
+                     style="display:block;margin:0 auto;float: left"
+                     onmouseover="window.parent.bigImg(this)"
+                     onmouseout="window.parent.closeImgWin()"
+                     src="" height="50" width="50" alt=""/>
+            </div>
+        </div>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>众家ERP信息</legend>
+        </fieldset>
+        <div class="box-center-line">
+            <div class="box-center-left">
+                <div>
+                    <label>产品类型:
+                        <input class="easyui-validatebox" type="text" name="type"/>
+                    </label>
+                </div>
+                <div>
+                    <label>款式编码:
+                        <input class="easyui-validatebox" type="text" name="style"/>
+                    </label>
+                </div>
+                <div>
+                    <label>印烫次数:
+                        <input class="easyui-validatebox" type="text" name="pressing_count"/>
+                    </label>
+                </div>
+                <div>
+                    <label>纯色件数:
+                        <input class="easyui-validatebox" type="text" name="pure_count"/>
+                    </label>
+                </div>
+                <div>
+                    <label>规格编码:
+                        <input class="easyui-validatebox" type="text" name="demo"/>
+                    </label>
+                </div>
+                <div>
+                    <label>规格名称:
+                        <input class="easyui-validatebox" type="text" name="demo"/>
+                    </label>
+                </div>
+                <div>
+                    <label>图案编码:
+                        <input class="easyui-validatebox" type="text" name="demo"/>
+                    </label>
+                </div>
+                <div>
+                    <label>颜色编码:
+                        <input class="easyui-validatebox" type="text" name="demo"/>
+                    </label>
+                </div>
+                <div>
+                    <label>颜色/规格编码:
+                        <input class="easyui-validatebox" type="text" name="demo"/>
+                    </label>
+                </div>
+                <div>
+                    <label>码数名称:
+                        <input class="easyui-validatebox" type="text" name="demo"/>
+                    </label>
+                </div>
+                <div>
+                    <label>码数代码:
+                        <input class="easyui-validatebox" type="text" name="demo"/>
+                    </label>
+                </div>
+                <div>
+                    <label>布料信息:
+                        <input class="easyui-validatebox" type="text" name="demo"/>
+                    </label>
+                </div>
+            </div>
+            <div class="box-center-right">
+                <a style="float: right" href="javascript:" class="file">众家ERP图片
+                    <input type="file" name="erp_image_file" id="input_erp_image"/>
+                </a>
+                <img id="erp_image" onclick="dimgloadwin('erp_image')"
+                     style="display:block;margin:0 auto;float: left"
+                     onmouseover="window.parent.bigImg(this)"
+                     onmouseout="window.parent.closeImgWin()"
+                     src="" height="50" width="50" alt=""/>
+            </div>
+        </div>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>订单信息</legend>
+        </fieldset>
+        <div class="box-center-line">
+            <div class="box-center-left">
+                <div>
+                    <label>单价:
+                        <input class="easyui-validatebox" type="text" name="price"/>
+                    </label>
+                </div>
+                <div>
+                    <label>数量:
+                        <input class="easyui-validatebox" type="text" name="size"/>
+                    </label>
+                </div>
+                <div>
+                    <label>销售金额:
+                        <input class="easyui-validatebox" type="text" name="payment"/>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<button type="button" class="layui-btn layui-btn-normal" onclick="save()">保存</button>
+<button type="button" class="layui-btn layui-btn-normal" onclick="window.parent.$('#dialog_div').dialog('close')">取消
+</button>
+</body>
+</html>
+
+<script>
+    var data = window.parent.formData;
+    var urlPrefix = window.location.protocol + "//" + window.location.host + "/";
+    var fileName = "";
+    var imageData = {};
+
+    jQuery(function () {
+        //表单数据初始化
+        $('#ff').form('load', data);
+
+        $('#imgDiv').dialog({
+            title: '预览',
+            width: 800,
+            height: 800,
+            resizable: true,
+            closed: false,
+            cache: false,
+            modal: true
+        });
+
+        //监听图片上传后预览
+        initImage(data.online_image, $("#online_image"));
+        $("#input_online_image").change(function () {
+            fileName = "online_image_file";
+            uploadImg($(this)[0].files[0], $("#online_image"));
+        });
+        initImage(data.wln_image, $("#wln_image"));
+        $("#input_wln_image").change(function () {
+            fileName = "wln_image_file";
+            uploadImg($(this)[0].files[0], $("#wln_image"));
+        });
+        initImage(data.erp_image, $("#erp_image"));
+        $("#input_erp_image").change(function () {
+            fileName = "erp_image_file";
+            uploadImg($(this)[0].files[0], $("#erp_image"));
+        });
+
+    });
+
+    /**
+     * 初始化图片预览
+     **/
+    function initImage(url, element) {
+        if (url !== null && typeof (url) !== 'undefined' && url.indexOf("http")
+        ) {
+            url = urlPrefix + url;
+        }
+        element.attr("src", url);
+    }
+
+    /**
+     * 上传照片
+     **/
+    function uploadImg(objUrl, obj) {
+        /* //获得一个http格式的url路径
+         var windowURL = window.URL;
+         //createObjectURL创建一个指向该参数对象(图片)的URL
+         var dataURL = windowURL.createObjectURL(objUrl);*/
+        var formData = new FormData($("#ff")[0]);
+        formData.append("id", data.id);
+        formData.append("fileName", fileName);
+        $.ajax({
+            url: '/wln/fileUpload',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result.result) {
+                    var name = fileName.replace(/_file/, "");
+                    imageData[name] = result.url;
+                    var url = urlPrefix + result.url;
+                    obj.attr("src", url);
+                } else {
+                    alert(result.msg);
+                }
+            },
+            error: function (result) {
+                alert("上传图片请求出错，请联系管理员！！！");
+                console.log(result);
+            }
+        });
+    }
+
+    /**
+     * 保存数据
+     */
+    function save() {
+        var formData = $("#ff").serializeObject();
+
+        //更新表单数据
+        for (var k in formData) {
+            if (formData.hasOwnProperty(k)) {
+                data[k] = formData[k];
+            }
+        }
+        //更新图片数据
+        for (var key in imageData) {
+            if (imageData.hasOwnProperty(key)) {
+                data[key] = imageData[key];
+            }
+        }
+        window.parent.saveSalesErpItemInfo(data);
+    }
+
+    //图片预览
+    function dimgloadwin(value) {
+        window.parent.dimgloadwin(data[value]);
+    }
+</script>

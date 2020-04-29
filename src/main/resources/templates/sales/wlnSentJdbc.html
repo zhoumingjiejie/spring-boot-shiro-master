@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layouts/list">
+<head>
+
+    <link rel="stylesheet" href="../assets/plugins/calendar/calendar.css"
+          th:href="@{/assets/plugins/calendar/calendar.css}"/>
+    <link rel="stylesheet" href="../assets/plugins/easyui/themes/gray/easyui.css"
+          th:href="@{/assets/plugins/easyui/themes/gray/easyui.css}"/>
+    <link rel="stylesheet" href="../assets/plugins/easyui/themes/icon.css"
+          th:href="@{/assets/plugins/easyui/themes/icon.css}"/>
+    <script type="text/javascript" src="../../assets/plugins/jquery.js" th:src="@{/assets/plugins/jquery.js}"></script>
+    <script type="text/javascript" src="../../assets/plugins/easyui/jquery.easyui.min.js"
+            th:src="@{/assets/plugins/easyui/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" src="../../assets/plugins/easyui/locale/easyui-lang-zh_CN.js"
+            th:src="@{/assets/plugins/easyui/locale/easyui-lang-zh_CN.js}"></script>
+    <script type="text/javascript" src="../../assets/statistical/statistical.js"
+            th:src="@{/assets/statistical/statistical.js}"></script>
+
+
+    <!--分开两个表单监听处理逻辑-->
+    <script type="text/javascript" src="../../assets/wln/salesErpInfo.js"
+            th:src="@{/assets/wln/salesErpInfo.js}"></script>
+    <script type="text/javascript" src="../../assets/wln/salesErpItemInfo.js"
+            th:src="@{/assets/wln/salesErpItemInfo.js}"></script>
+    <script type="text/javascript" src="../../js/cookie.js"></script>
+
+    <!--tip-->
+    <link href="../../assets/xtiper/css/xtiper.css" type="text/css" rel="stylesheet"/>
+    <script src="../../assets/xtiper/js/xtiper.min.js" type="text/javascript"></script>
+    <style>
+        .table_center th {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var salesInfoRowData = {};// 订单行数据
+        var salesInfoRowIndex = 0;// 订单行下标
+        var formData = {};// 表单数据
+
+        function save() {
+            saveDecomposition();
+        }
+
+        /**
+         * 打开编辑框
+         */
+        function openDialog(htmlName, path) {
+            var url = document.location.origin + "/view?name=" + htmlName;
+            if (path == null || typeof (path) == 'undefined') {
+                url = url + "&path=sales/";
+            } else {
+                url = url + path;
+            }
+            jQuery("#dialog_div").dialog({
+                title: '编辑',
+                width: 800,
+                height: 800,
+                minimizable: true,
+                maximizable: true,
+                content: "<iframe id='dialog_iframe' style='width: 100%;height: 100%' border='0' src='" + url + "'></iframe>",
+                modal: true
+            });
+            $('#dialog_div').window('center');//使Dialog居中显示
+        }
+
+        /**
+         * 调用打印弹窗函数
+         * */
+        function dialogPrint(methodName, data) {
+            openDialog('print');
+
+            var childWindow = $("#dialog_iframe")[0].contentWindow; //表示获取了嵌入在iframe中的子页面的window对象。
+            methodName = "childWindow." + methodName;
+            var iframe = document.getElementById("dialog_iframe");
+            if (iframe.attachEvent) {
+                iframe.attachEvent("onload", function () {
+                    eval(methodName + "(data)");
+                });
+            } else {
+                iframe.onload = function () {
+                    eval(methodName + "(data)");
+                };
+            }
+        }
+
+        window.onload = function () {
+            changeDivHeight();
+        };
+
+        //当浏览器窗口大小改变时，设置显示内容的高度
+        window.onresize = function () {
+            //changeDivHeight();
+        };
+
+        function changeDivHeight() {
+            var h = document.documentElement.clientHeight - 100;//获取页面可见高度
+            var midHeight = h / 2;
+            console.log("height = " + midHeight);
+            $("#pageTable").datagrid({
+                height: midHeight
+            });
+            $("#etg").datagrid({
+                height: midHeight
+            });
+        }
+
+
+        /*]]>*/
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- 用于图片预览的dialog -->
+    <div id='dahuikuimg'>
+        <img id="simg" src=""/>
+    </div>
+    <div id="dialog" class="easyui-dialog" title="图片预览"
+         data-options="resizable:true,modal:false,closed:true,closeOnEscape:false">
+        <img id="img_id" alt=""/>
+    </div>
+    <div style="display: none">
+        <p id="dataBox" th:text="${erpStatus}"></p>
+    </div>
+    <!--标题-->
+    <!--<div class="page-heading clearfix line-dashed b-b line-lg">
+        <div class="page-title pull-left">
+            <h3>
+                <i class="fa fa-file"></i>
+                <span>万里牛待发货订单</span>
+            </h3>
+        </div>
+    </div>-->
+    <!--搜索栏-->
+    <div id="tb" style="padding:5px;height:auto">
+        <div>
+            订单号: <input id="tp_tid" class="easyui-textbox" style="width:100px;"/>
+            物流单号: <input class="easyui-textbox" style="width:100px;" id="express_code"/>
+            系统单号: <input class="easyui-textbox" style="width:100px;" id="trade_no"/>
+            买家ID: <input class="easyui-textbox" style="width:100px;" id="buyer_account"/>
+            电话: <input class="easyui-textbox" style="width:100px;" id="phone"/>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()">查询</a>
+            <a href="#" class="easyui-linkbutton" onclick="editorSalesErpInfo('saveSalesErpInfo')">编辑</a>
+            <label id="unchecked">
+                <a href="#" class="easyui-linkbutton" onclick="decomposition()">拆单</a>
+                <a href="#" class="easyui-linkbutton" onclick="editorSalesErpInfo('saveMerge')">合单</a>
+                <a href="#" id="updateStatus" class="easyui-linkbutton" onclick="updateErpStatus()">审核</a>
+            </label>
+            <label id="checked">
+                <a href="#" class="easyui-linkbutton" onclick="saveFactory()">生成生产单</a>
+                <a href="#" class="easyui-linkbutton" onclick="printFactoryOrder()">打印生产单</a>
+            </label>
+            <!--<a href="#" class="easyui-linkbutton" onclick="save()">保存</a>-->
+            <!--<a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="exports()">导出</a>-->
+        </div>
+    </div>
+    <!--table内容-->
+    <div class="panel panel-info" id="data-panel" th:fragment="table" role="grid">
+        <div class="panel-heading hidden">
+        </div>
+
+        <div style="overflow-x: scroll;">
+            <!--singleSelect:true,-->
+            <table id="pageTable" data-options="selectOnCheck:false,checkOnSelect:false,fitColumns:false"
+                   class="easyui-datagrid"
+                   style="width:100%;height: 600px;min-width: 1000px;"
+                   pagination="true">
+                <!--固定列-->
+                <thead frozen="true">
+                <tr>
+                    <th data-options="field:'id'" checkbox="true"></th>
+                </tr>
+                </thead>
+                <thead>
+                <tr>
+
+                    <!--<th data-options="field:'buyer_msg'" align="center" sortable="true">买家留言</th>-->
+                    <th data-options="field:'erp_status'" align="center">ERP审核状态</th>
+                    <th data-options="field:'source_platform'" align="center">平台</th>
+                    <th data-options="field:'pay_time',formatter: formatDatebox" align="center">付款时间</th>
+                    <th data-options="field:'image'" align="center">推送时间</th>
+                    <th data-options="field:'express_code'" align="center">物流单号</th>
+                    <th data-options="field:'type'" align="center">商品分类</th>
+                    <th data-options="field:'style'" align="center">款式编码</th>
+                    <th data-options="field:'shop_id'" align="center">店铺编码</th>
+                    <th data-options="field:'shop_name'" align="center">店铺名称</th>
+                    <th data-options="field:'tp_tid'" align="center">线上订单号</th>
+                    <th data-options="field:'paid_fee'" align="center">订单实付金额</th>
+                    <th data-options="field:'receiver'" align="center">收件人</th>
+                    <th data-options="field:'phone'" align="center">联系方式</th>
+                    <th data-options="field:'country'" align="center">国家</th>
+                    <th data-options="field:'address'" align="center">地址</th>
+                    <th data-options="field:'buyer_account'" align="center">客户ID</th>
+                    <th data-options="field:'trade_no'" align="center">系统订单号</th>
+                    <th data-options="field:'demo'" align="center">建单人</th>
+                    <th data-options="field:'demo'" align="center">物流公司</th>
+                    <th data-options="field:'demo'" align="center">生产单号</th>
+                    <th data-options="field:'demo'" align="center">生产单类型</th>
+                    <th data-options="field:'demo'" align="center">物流状态</th>
+                    <th data-options="field:'demo'" align="center">子物流单号</th>
+                    <th data-options="field:'demo'" align="center">系统状态</th>
+                    <th data-options="field:'demo'" align="center">销售备注</th>
+                    <th data-options="field:'demo'" align="center">打印标记</th>
+                    <th data-options="field:'demo'" align="center">订单类型（发货单模板）</th>
+                    <th data-options="field:'demo'" align="center">发货仓库</th>
+                    <th data-options="field:'demo'" align="center">数量</th>
+                    <th data-options="field:'demo'" align="center">店长</th>
+                    <th data-options="field:'demo'" align="center">团队</th>
+                    <th data-options="field:'demo'" align="center">二级部</th>
+                    <th data-options="field:'demo'" align="center">一级部</th>
+                    <th data-options="field:'demo'" align="center">标准成本（含物流费）</th>
+                    <th data-options="field:'demo'" align="center">标准利润金额</th>
+                    <th data-options="field:'demo'" align="center">利润状态</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--子标题-->
+    <!--<div class="page-heading clearfix line-dashed b-b line-lg">
+        <div class="page-title pull-left">
+            <h3>
+                <i class="fa fa-file"></i>
+                <span>订单明细</span>
+            </h3>
+        </div>
+    </div>-->
+    <!--搜索栏-->
+    <div style="padding:5px;height:auto">
+        <div>
+            <!--<a href="#" class="easyui-linkbutton" onclick="decomposition('offline')">拆（明细）</a>-->
+            <!--<a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="exports()">导出</a>-->
+        </div>
+    </div>
+    <!--子table内容-->
+    <div class="panel panel-info" id="subTable" th:fragment="table" role="grid">
+        <div class="panel-heading hidden">
+        </div>
+
+        <div style="overflow-x: scroll;">
+            <table id="etg"
+                   data-options="selectOnCheck:false,checkOnSelect:false,fitColumns:false,onDblClickCell:onDblClickCell"
+                   class="easyui-datagrid"
+                   style="width:100%;height: 600px;min-width: 1000px;"
+                   pagination="true">
+                <!--固定列-->
+                <thead frozen="true">
+                <tr>
+                    <th data-options="field:'id'" checkbox="true"></th>
+                </tr>
+                </thead>
+                <thead>
+                <tr>
+                    <!--<th colspan="1" align="center">拆/合分类</th>-->
+                    <th colspan="4" align="center">线上信息</th>
+                    <th colspan="3" align="center">万里牛ERP信息</th>
+                    <th colspan="12" align="center">众家ERP信息</th>
+                    <th colspan="3" align="center">订单信息</th>
+                </tr>
+                <tr>
+                    <!--<th data-options="field:'productid',width:100,
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'value',
+                                textField:'label',
+                                data:comboboxData
+                            }
+                        }">组
+                    </th>-->
+                    <!--<th data-options="field:'split',width:100,editor:{type:'text'}">拆</th>-->
+                    <!--线上信息-->
+                    <th data-options="field:'online_image',formatter: showPhoto" align="center">线上图片</th>
+                    <th data-options="field:'oln_item_id'" align="center">线上编码</th>
+                    <th data-options="field:'oln_sku_id'" align="center">线上规格</th>
+                    <th data-options="field:'oln_item_name'" align="center">线上标题</th>
+                    <!--万里牛ERP信息-->
+                    <th data-options="field:'wln_image',formatter: showPhoto" align="center">万里牛图片</th>
+                    <th data-options="field:'item_name'" align="center">万里牛规格编码</th>
+                    <!--众家ERP信息-->
+                    <th data-options="field:'erp_image',formatter: showPhoto" align="center">众家ERP图片</th>
+                    <th data-options="field:'type'" align="center">产品类型</th>
+                    <th data-options="field:'style'" align="center">款式编码</th>
+                    <!--订单信息-->
+                    <th data-options="field:'price'" align="center">单价</th>
+                    <th data-options="field:'size'" align="center">数量</th>
+                    <th data-options="field:'payment'" align="center">销售金额</th>
+                    <th data-options="field:'demo'" align="center">万里牛规格名称</th>
+                    <th data-options="field:'pressing_count'" align="center">印烫次数</th>
+                    <th data-options="field:'pure_count'" align="center">纯色件数</th>
+                    <th data-options="field:'demo'" align="center">规格编码</th>
+                    <th data-options="field:'demo'" align="center">规格名称</th>
+                    <th data-options="field:'demo'" align="center">图案编码</th>
+                    <th data-options="field:'demo'" align="center">颜色编码</th>
+                    <th data-options="field:'demo'" align="center">颜色/规格编码</th>
+                    <th data-options="field:'demo'" align="center">码数名称</th>
+                    <th data-options="field:'demo'" align="center">码数代码</th>
+                    <th data-options="field:'demo'" align="center">布料信息</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--编辑框-->
+    <div id="dialog_div"></div>
+</div>
+
+
+</body>
+</html>

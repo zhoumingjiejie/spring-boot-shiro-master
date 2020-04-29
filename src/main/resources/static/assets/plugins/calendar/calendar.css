@@ -1,0 +1,121 @@
+.calendar-small .controls {
+    text-align: center;
+}
+.calendar-small .controls a {
+    cursor: pointer;
+}
+.calendar-small .controls h4 {
+    display: inline;
+}
+.calendar-small .day-headers,
+.calendar-small .days {
+    font-size: 0;
+}
+.calendar-small .day {
+    display: inline-block;
+    position: relative;
+    font-size: 14px;
+    width: 14.285714285714286%;
+    text-align: center;
+}
+.calendar-small .day a {
+    color: #000000;
+    display: block;
+    cursor: pointer;
+    padding: 20% 0 20% 0;
+}
+.calendar-small .day a:hover {
+    background-color: #eee;
+    text-decoration: none;
+}
+.calendar-small .day.header {
+    border-bottom: 1px gray solid;
+}
+.calendar-small .day.active a {
+    background-color: #1d86c8;
+    color: #ffffff;
+}
+.calendar-small .day.active a:hover {
+    background-color: #36a0e2;
+}
+.calendar-small .day.active .adjacent-month {
+    background-color: #8fcaef;
+    color: #ffffff;
+}
+.calendar-small .day.active .adjacent-month:hover {
+    background-color: #bcdff5;
+}
+.calendar-small .day.adjacent-month a {
+    color: #ddd;
+}
+.calendar-small .day .badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 1;
+}
+
+.calendar-small{
+    padding: 5px;
+}
+
+.calendar-small .controls{
+    background-color: #36a9e1;
+    margin: -5px;
+    padding: 10px;
+    color: #fff;
+}
+
+.calendar-small .controls a {
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+}
+.calendar-small .controls a:hover{
+    color: #ff8c00;
+}
+
+.calendar-small .day .badge{
+    top:  -2px;
+    left: 40%;
+    background-color: #ff8c00;
+    color: #ff8c00;
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    min-width: 0;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.calendar-small .day a:hover {
+    background-color: #eee;
+    text-decoration: none;
+}
+
+.calendar-small .day.today a{
+    font-weight: bold;
+    color: #ff8c00;
+}
+.calendar-small .day.selected a{
+    background: url("images/calendar_selected.png") center no-repeat;
+    color: #fff;
+}
+
+.calendar-small .day.event a{
+    background: url("images/calendar_selected1.png") center no-repeat;
+    color: #fff;
+}
+
+.calendar-small .day-headers{
+    padding: 5px 0;
+}
+.calendar-small .day.header {
+    border-bottom: 0px gray solid;
+    min-height: inherit;
+}
+.calendar-small .day .day-contents{
+    display: block;
+    cursor: pointer;
+    padding: 20% 0 20% 0;
+}

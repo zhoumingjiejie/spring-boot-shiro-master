@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+	<head>
+	    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">GPlatform管控平台</title>
+
+		<meta charset="utf-8"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+		<meta name="description" content="OZAS"/>
+		<meta name="keywords" content="OZAS"/>
+		<meta name="author" content="OZAS"/>
+		<meta name="robots" content="index,follow"/>
+		<meta name="application-name" content="OZAS"/>
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="../assets/plugins/bootstrap/css/bootstrap.min.css" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}"/>
+		<link rel="stylesheet" href="../assets/plugins/font-awesome/css/font-awesome.min.css" th:href="@{/assets/plugins/font-awesome/css/font-awesome.min.css}"/>
+
+		<!-- select2 styles -->
+		<link rel="stylesheet" href="../../../assets/plugins/select2/css/select2.css" th:href="@{/assets/plugins/select2/css/select2.css}"/>
+		<link rel="stylesheet" href="../../../assets/plugins/select2/css/select2-bootstrap.css" th:href="@{/assets/plugins/select2/css/select2-bootstrap.css}"/>
+
+		<!-- page specific plugin styles -->
+
+		<link rel="stylesheet" href="../assets/oz/css/oz.tabs.css" th:href="@{/assets/oz/css/oz.tabs.css}"/>
+
+		<!-- messager styles -->
+		<link rel="stylesheet" href="../assets/plugins/bootstrap-toastr/toastr.css" th:href="@{/assets/plugins/bootstrap-toastr/toastr.min.css}"/>
+		<link rel="stylesheet" href="../assets/plugins/bootstrap-datepicker/datepicker3.css" th:href="@{/assets/plugins/bootstrap-datepicker/css/datepicker3.css}"/>
+
+		<link rel="stylesheet" href="../../../assets/plugins/select2/css/select2.css" th:href="@{/assets/plugins/select2/css/select2.css}"/>
+		<link rel="stylesheet" href="../../../assets/plugins/select2/css/select2-bootstrap.css" th:href="@{/assets/plugins/select2/css/select2-bootstrap.css}"/>
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../assets/oz/css/ace-fonts.min.css" th:href="@{/assets/oz/css/ace-fonts.css}"/>
+		<!-- ace styles -->
+		<!--<link rel="stylesheet" href="../assets/oz/css/ace.min.css" id="main-ace-style" th:href="@{/assets/oz/css/ace.css}"/>-->
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../assets/oz/css/ace-part2.min.css" th:href="@{/assets/oz/css/ace-part2.css}"/>
+		<![endif]-->
+		<link rel="stylesheet" href="../assets/oz/css/ace-skins.min.css" th:href="@{/assets/oz/css/ace-skins.css}"/>
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../assets/oz/css/ace-ie.min.css" th:href="@{/assets/oz/css/ace-ie.css}"/>
+		<![endif]-->
+
+		<script type="text/javascript" th:inline="javascript">
+			var contextPath = /*[[${#httpServletRequest.getContextPath()}]]*/ '';
+		</script>
+
+		<link rel="stylesheet" href="../assets/oz/css/app.css" th:href="@{/assets/oz/css/app.css}"/>
+		<link rel="stylesheet" href="../assets/oz/css/animate.css" th:href="@{/assets/oz/css/animate.css}"/>
+
+		<link rel="stylesheet" href="../assets/oz/css/oz.css" th:href="@{/assets/oz/css/oz.css}"/>
+		<link rel="stylesheet" href="../assets/oz/css/plugins.css" th:href="@{/assets/oz/css/plugins.css}"/>
+
+
+		<!-- ace settings handler -->
+		<script src="../assets/oz/ace-extra.min.js" th:src="@{/assets/oz/ace-extra.js}"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script type="text/javascript" src="../assets/plugins/html5shiv.min.js" th:src="@{/assets/plugins/html5shiv.min.js}"></script>
+		<script type="text/javascript" src="../assets/plugins/respond.min.js" th:src="@{/assets/plugins/respond.min.js}"></script>
+		<script type="text/javascript" src="../assets/plugins/excanvas.min.js" th:src="@{/assets/plugins/excanvas.min.js}"></script>
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+	</head>
+	<body>
+        <div class="vbox">
+                <div class="scrollable padder" layout:fragment="main-content">
+
+                </div>
+		</div>
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+		/*<![CDATA[*/
+		window.jQuery || document.write("<script src='" + contextPath + "/assets/plugins/jquery.js'>" + "<" + "/script>");
+		/*]]>*/
+		</script>
+		<!-- <![endif]-->
+
+        <!--[if IE]>
+        <script type="text/javascript">
+		/*<![CDATA[*/
+		    window.jQuery || document.write("<script src='"+contextPath+"assets/plugins/jquery1x.min.js'>"+"<"+"/script>");
+		/*]]>*/
+		</script>
+		<![endif]-->
+
+        <script type="text/javascript">
+		 /*<![CDATA[*/
+		 if ('ontouchstart' in document.documentElement) document.write("<script src='" + contextPath + "assets/plugins/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+		 /*]]>*/
+		</script>
+
+		<script type="text/javascript" src="../assets/plugins/bootstrap/js/bootstrap.min.js" th:src="@{/assets/plugins/bootstrap/js/bootstrap.js}"></script>
+		<script type="text/javascript" src="../assets/plugins/jquery-ba-resize/jquery.ba-resize.min.js" th:src="@{/assets/plugins/jquery.ba-resize.min.js}"></script>
+		<script type="text/javascript" src="../assets/plugins/underscore-min.js" th:src="@{/assets/plugins/underscore-min.js}"></script>
+
+		<!-- page specific plugin scripts -->
+        <!-- ace scripts -->
+		<script type="text/javascript" src="../assets/oz/ace.js" th:src="@{/assets/oz/ace.js}"></script>
+		<script type="text/javascript" src="../assets/oz/ace-elements.js" th:src="@{/assets/oz/ace-elements.js}"></script>
+		<!-- oz -->
+		<script type="text/javascript" src="../assets/oz/oz.js" th:src="@{/assets/oz/oz.js}"></script>
+		<!--tab -->
+		<script type="text/javascript" src="../assets/plugins/bootstrap-contextmenu.js" th:src="@{/assets/plugins/bootstrap-contextmenu.js}"></script>
+		<script type="text/javascript" src="../assets/oz/oz.tabs.js" th:src="@{/assets/oz/oz.tabs.js}"></script>
+		<!-- tooltip -->
+		<script type="text/javascript" src="../assets/plugins/bootstrap-toastr/toastr.js" th:src="@{/assets/plugins/bootstrap-toastr/toastr.min.js}"></script>
+		<script type="text/javascript" src="../assets/oz/oz.toast.js" th:src="@{/assets/oz/oz.toast.js}"></script>
+		<!-- dialog and message -->
+		<script type="text/javascript" src="../assets/plugins/layer/layer.js" th:src="@{/assets/plugins/layer/layer.js}"></script>
+        <script type="text/javascript" src="../assets/oz/oz.dialog.js" th:src="@{/assets/oz/oz.dialog.js}"></script>
+		<script type="text/javascript" src="../assets/oz/oz.message.js" th:src="@{/assets/oz/oz.message.js}"></script>
+        <!-- oz grid -->
+        <script type="text/javascript" src="../../../assets/oz/oz.grid.js" th:src="@{/assets/oz/oz.grid.js}"></script>
+		<!-- datepicker -->
+        <script type="text/javascript" src="../assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" th:src="@{/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
+
+		<!-- parsley/validate -->
+		<script type="text/javascript" src="../../../assets/plugins/parsley/parsley.min.js" th:src="@{/assets/plugins/parsley/parsley.js}"></script>
+		<script type="text/javascript" src="../../../assets/plugins/parsley/i18n/zh_cn.js" th:src="@{/assets/plugins/parsley/i18n/zh_cn.js}"></script>
+
+		<!-- select2 -->
+		<script type="text/javascript" src="../../../assets/plugins/select2/js/select2.js" th:src="@{/assets/plugins/select2/js/select2.js}"></script>
+		<script type="text/javascript" src="../../../assets/plugins/select2/js/i18n/select2_locale_zh-CN.js" th:src="@{/assets/plugins/select2/js/i18n/select2_locale_zh-CN.js}"></script>
+
+		<!-- slimscroll -->
+		<script type="text/javascript" src="../assets/plugins/jquery.slimscroll.min.js" th:src="@{/assets/plugins/jquery.slimscroll.min.js}"></script>
+		
+		<!-- jquery-Json -->
+		<script type="text/javascript" src="../assets/plugins/jquery.json.js" th:src="@{/assets/plugins/jquery.json.js}"></script>
+		
+		<th:block layout:fragment="scripts"></th:block>
+	</body>
+
+</html>

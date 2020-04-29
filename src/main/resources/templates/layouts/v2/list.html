@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+	<head>
+	    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">GPlatform管控平台</title>
+		<th:block th:include="fragments/v2/includes::header"></th:block>
+	</head>
+	<body>
+        <div class="wrapper">
+			<div class="content" layout:fragment="content">
+
+			</div>
+		</div>
+        <th:block th:include="fragments/v2/includes::scripts"></th:block>
+        <script type="text/javascript">
+		     /*<![CDATA[*/
+		     function ozRefresh() {
+			     var grid = Grid.get("data-panel");
+			     if (grid) {
+				     grid.refresh();
+			     }
+		     }
+			 function onAfterLoad(){
+				 autoFrameHeight();
+			 }
+			 $(autoFrameHeight);
+		     /*]]>*/
+		</script>
+		<th:block layout:fragment="scripts"></th:block>
+	</body>
+</html>

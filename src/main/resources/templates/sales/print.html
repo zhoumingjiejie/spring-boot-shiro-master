@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" src="../../assets/plugins/jquery.js" th:src="@{/assets/plugins/jquery.js}"></script>
+    <script type="text/javascript" src="../../assets/plugins/imagePreview/js/imagePreview.js"
+            th:src="@{/assets/plugins/imagePreview/js/imagePreview.js}"></script>
+    <script type="text/javascript" src="../../assets/xtiper/js/xtiper.min.js"
+            th:src="@{/assets/xtiper/js/xtiper.min.js}"></script>
+    <script type="text/javascript" src="../../assets/print/webSocket.js"
+            th:src="@{/assets/print/webSocket.js}"></script>
+    <link type="text/css" href="../../assets/xtiper/css/xtiper.css" rel="stylesheet"
+          th:href="@{/assets/xtiper/css/xtiper.css}"/>
+
+    <meta charset="UTF-8"/>
+    <title>菜鸟打印</title>
+</head>
+<body>
+<label for="printData">打印数据:</label>
+<select name="printData" id="printData">
+    <option value="0">销售单</option>
+    <option value="1">小票生产单</option>
+</select>
+<label for="prints">打印机列表:</label>
+<select name="prints" id="prints">
+    <option value="">默认</option>
+</select>
+<button onclick="doPrint(true)">打印预览</button>
+<button onclick="doPrint(false)">打印</button>
+<!--打印预览-->
+<div id="imgs">
+</div>
+<button style="position: fixed;bottom: 20px;right: 20px;height: 50px;width: 50px;border-radius: 50%;border: 1px solid #DDD;background: #4998E8;color: #fff;"
+        type="button" class="layui-btn layui-btn-normal" onclick="window.parent.$('#dialog_div').dialog('close')">关闭
+</button>
+</body>
+</html>
+
+<script>
+    var documents;
+
+    //设置打印数据
+    function setPrintData(data) {
+        documents = data;
+        //初始化预览
+        doPrint(true);
+    }
+
+    //返回数据给打印机
+    function getDocuments() {
+        return documents;
+    }
+</script>
